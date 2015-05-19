@@ -4,8 +4,7 @@ module Adrian
 
     def initialize(value)
       @value = value
-      created_at
-      updated_at
+      stat
     end
 
     def path
