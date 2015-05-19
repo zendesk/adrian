@@ -29,9 +29,9 @@ module Adrian
     end
 
     def stat
-      @stat = File.stat(path)
+      @stat ||= File.stat(path)
     rescue Errno::ENOENT
-      @stat = nil
+      nil
     end
 
     def atime
