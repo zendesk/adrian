@@ -3,9 +3,8 @@ module Adrian
     attr_accessor :logger
 
     def initialize(value)
-      @value      = value
-      created_at
-      updated_at
+      @value = value
+      stat
     end
 
     def path
@@ -28,16 +27,18 @@ module Adrian
       @value = destination_path
     end
 
-    def atime
-      File.atime(path).utc
+    def stat
+      @stat ||= File.stat(path)
     rescue Errno::ENOENT
       nil
     end
 
+    def atime
+      stat ? stat.atime.utc : nil
+    end
+
     def mtime
-      File.mtime(path).utc
-    rescue Errno::ENOENT
-      nil
+      stat ? stat.mtime.utc : nil
     end
 
     def updated_at
