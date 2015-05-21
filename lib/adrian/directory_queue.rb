@@ -51,6 +51,10 @@ module Adrian
       items.include?(item)
     end
 
+    def items_length
+      @items ? @items.length : 0
+    end
+
     protected
 
     def wrap_item(value)
