@@ -73,11 +73,9 @@ module Adrian
 
     def items
       return @items if @items && @items.length > 0
-      @items = begin
-        items = files.map { |file| wrap_item(file) }
-        items.reject! { |item| !item.exist? || filter?(item) }
-        items.sort_by(&:updated_at)
-      end
+      @items = files.map! { |file| wrap_item(file) }
+      @items.reject! { |item| !item.exist? || filter?(item) }
+      @items.sort_by!(&:updated_at)
     end
 
     def files
