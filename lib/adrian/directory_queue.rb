@@ -32,7 +32,6 @@ module Adrian
       while item = items.shift
         return item if reserve(item)
       end
-      nil
     end
 
     def push_item(value)
@@ -49,10 +48,6 @@ module Adrian
     def include?(value)
       item = wrap_item(value)
       items.include?(item)
-    end
-
-    def items_length
-      @items ? @items.length : 0
     end
 
     protected

@@ -108,18 +108,18 @@ describe Adrian::DirectoryQueue do
         end
 
         it "populates items list on first pop" do
-          @q.items_length.must_equal 0
+          items_count.must_equal 0
           @q.push(@item1)
           @q.push(@item2)
-          @q.items_length.must_equal 0
+          items_count.must_equal 0
 
           @q.pop
-          @q.items_length.must_equal 1
+          items_count.must_equal 1
         end
 
         it "populates items list when #include? is used" do
           @q.push(@item1)
-          @q.items_length.must_equal 0
+          items_count.must_equal 0
           assert @q.include?(@item1)
         end
 
@@ -128,26 +128,26 @@ describe Adrian::DirectoryQueue do
             @q.push(@item1)
             @q.push(@item2)
             @q.pop
-            @q.items_length.must_equal 1
+            items_count.must_equal 1
 
             @q.push(@item3)
             @q.push(@item4)
             refute @q.include?(@item4)
-            @q.items_length.must_equal 1
+            items_count.must_equal 1
 
             @q.pop
-            @q.items_length.must_equal 0
+            items_count.must_equal 0
           end
 
           it "and #pop is called" do
             @q.pop
             assert @q.include?(@item4)
-            @q.items_length.must_equal 1
+            items_count.must_equal 1
           end
 
           it "and #include? is called" do
             assert @q.include?(@item3)
-            @q.items_length.must_equal 2
+            items_count.must_equal 2
           end
         end
       end
@@ -199,7 +199,10 @@ describe Adrian::DirectoryQueue do
         filter.duration.must_equal 300
       end
     end
+  end
 
+  def items_count
+    (@q.instance_variable_get(:@items) || []).size
   end
 
 end
