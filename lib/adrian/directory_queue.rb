@@ -29,11 +29,9 @@ module Adrian
     end
 
     def pop_item
-      items.each do |item|
+      while item = items.shift
         return item if reserve(item)
       end
-
-      nil
     end
 
     def push_item(value)
@@ -69,9 +67,10 @@ module Adrian
     end
 
     def items
-      items = files.map { |file| wrap_item(file) }
-      items.reject! { |item| !item.exist? || filter?(item) }
-      items.sort_by(&:updated_at)
+      return @items if @items && @items.length > 0
+      @items = files.map! { |file| wrap_item(file) }
+      @items.reject! { |item| !item.exist? || filter?(item) }
+      @items.sort_by!(&:updated_at)
     end
 
     def files

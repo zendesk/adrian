@@ -93,12 +93,64 @@ describe Adrian::DirectoryQueue do
         assert_equal nil, @q.pop
       end
 
-      it "set's the logger on the item" do
+      it "sets the logger on the item" do
         @item.logger.must_be_nil
         @q.push(@item)
         @q.pop.logger.must_equal @logger
       end
 
+      describe "items list" do
+        before do
+          @item1 = Tempfile.new('item1-').path
+          @item2 = Tempfile.new('item2-').path
+          @item3 = Tempfile.new('item3-').path
+          @item4 = Tempfile.new('item4-').path
+        end
+
+        it "populates items list on first pop" do
+          items_count.must_equal 0
+          @q.push(@item1)
+          @q.push(@item2)
+          items_count.must_equal 0
+
+          @q.pop
+          items_count.must_equal 1
+        end
+
+        it "populates items list when #include? is used" do
+          @q.push(@item1)
+          items_count.must_equal 0
+          assert @q.include?(@item1)
+        end
+
+        describe "only repopulates items list from directory after its current contents are emptied" do
+          before do
+            @q.push(@item1)
+            @q.push(@item2)
+            @q.pop
+            items_count.must_equal 1
+
+            @q.push(@item3)
+            @q.push(@item4)
+            refute @q.include?(@item4)
+            items_count.must_equal 1
+
+            @q.pop
+            items_count.must_equal 0
+          end
+
+          it "and #pop is called" do
+            @q.pop
+            assert @q.include?(@item4)
+            items_count.must_equal 1
+          end
+
+          it "and #include? is called" do
+            assert @q.include?(@item3)
+            items_count.must_equal 2
+          end
+        end
+      end
     end
 
     describe 'push' do
@@ -147,7 +199,10 @@ describe Adrian::DirectoryQueue do
         filter.duration.must_equal 300
       end
     end
+  end
 
+  def items_count
+    (@q.instance_variable_get(:@items) || []).size
   end
 
 end
