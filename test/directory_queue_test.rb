@@ -89,7 +89,7 @@ describe Adrian::DirectoryQueue do
       end
 
       it "only provides normal files" do
-        not_file = Dir.mktmpdir(@q.available_path, 'directory_queue_x')
+        not_file = Dir.mktmpdir('directory_queue_x', @q.available_path)
         assert_equal nil, @q.pop
       end
 
