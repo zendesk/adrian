@@ -36,6 +36,14 @@ module Adrian
       @max_age ||= @options[:max_age]
     end
 
+    def last_retry?(item)
+      item && max_age && delay && item.age >= (max_age - delay)
+    end
+
+    def delay
+      @delay ||= @options[:delay]
+    end
+
     def pop_item
       raise "#{self.class.name}#pop_item is not defined"
     end
