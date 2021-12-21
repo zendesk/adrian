@@ -36,8 +36,8 @@ module Adrian
 
     def push_item(value)
       item = wrap_item(value)
-      item.move(available_path)
       item.touch
+      item.move(available_path)
       self
     end
 
@@ -59,8 +59,8 @@ module Adrian
     end
 
     def reserve(item)
-      item.move(reserved_path)
       item.touch
+      item.move(reserved_path)
       true
     rescue Errno::ENOENT => e
       false
