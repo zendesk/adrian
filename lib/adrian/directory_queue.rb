@@ -24,6 +24,7 @@ module Adrian
       @available_path = options.fetch(:path)
       @reserved_path  = options.fetch(:reserved_path, default_reserved_path)
       @logger         = options[:logger]
+      @touch_first    = options[:touch_first]
       filters << Filters::FileLock.new(:duration => options[:lock_duration], :reserved_path => reserved_path)
       filters << Filters::Delay.new(:duration => options[:delay]) if options[:delay]
     end
@@ -36,8 +37,13 @@ module Adrian
 
     def push_item(value)
       item = wrap_item(value)
-      item.move(available_path)
-      item.touch
+      if @touch_first
+        item.touch
+        item.move(available_path)
+      else
+        item.move(available_path)
+        item.touch
+      end
       self
     end
 
@@ -59,8 +65,13 @@ module Adrian
     end
 
     def reserve(item)
-      item.move(reserved_path)
-      item.touch
+      if @touch_first
+        item.touch
+        item.move(reserved_path)
+      else
+        item.move(reserved_path)
+        item.touch
+      end
       true
     rescue Errno::ENOENT => e
       false
