@@ -31,19 +31,13 @@ module Adrian
 
     def pop_item
       while item = items.shift
-        return item if reserve(item)
+        return item if reserve(item, reserved_path)
       end
     end
 
     def push_item(value)
       item = wrap_item(value)
-      if @touch_first
-        item.touch
-        item.move(available_path)
-      else
-        item.move(available_path)
-        item.touch
-      end
+      reserve(item, available_path)
       self
     end
 
@@ -64,12 +58,12 @@ module Adrian
       item
     end
 
-    def reserve(item)
+    def reserve(item, path)
       if @touch_first
         item.touch
-        item.move(reserved_path)
+        item.move(path)
       else
-        item.move(reserved_path)
+        item.move(path)
         item.touch
       end
       true
