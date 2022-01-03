@@ -1,4 +1,5 @@
 require_relative 'test_helper'
+require_relative '../lib/adrian/queue.rb'
 
 describe Adrian::Queue do
   class TestQueue < Adrian::Queue
