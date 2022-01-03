@@ -20,11 +20,11 @@ describe Adrian::Queue do
     it 'validates the age of items' do
       item = Adrian::QueueItem.new('value', Time.now)
       @q.push(item)
-      @q.pop.must_equal item
+      _(@q.pop).must_equal item
 
       item = Adrian::QueueItem.new('value', Time.now - 120)
       @q.push(item)
-      lambda { @q.pop }.must_raise(Adrian::Queue::ItemTooOldError)
+      _(lambda { @q.pop }).must_raise(Adrian::Queue::ItemTooOldError)
     end
 
   end
@@ -34,16 +34,16 @@ describe Adrian::Queue do
 
     item = Adrian::QueueItem.new('value', Time.now)
 
-    item.queue.must_be_nil
+    _(item.queue).must_be_nil
 
     q.push(item)
 
-    item.queue.must_be_nil
+    _(item.queue).must_be_nil
 
     popped_item = q.pop
 
-    popped_item.must_equal item
-    item.queue.must_equal q
+    _(popped_item).must_equal item
+    _(item.queue).must_equal q
   end
 
 end
