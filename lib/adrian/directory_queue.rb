@@ -17,7 +17,7 @@ module Adrian
     # Note:
     # There is the possibility of an item being consumed by multiple processes when its still in the queue after its lock expires.
     # The reason for allowing this is:
-    #   1. It's much simpler than introducing a seperate monitoring process to handle lock expiry.
+    #   1. It's much simpler than introducing a separate monitoring process to handle lock expiry.
     #   2. This is an acceptable and rare event. e.g. it only happens when the process working on the item crashes without being able to release the lock
     def initialize(options = {})
       super
