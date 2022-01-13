@@ -24,7 +24,7 @@ module Adrian
       @available_path = options.fetch(:path)
       @reserved_path  = options.fetch(:reserved_path, default_reserved_path)
       @logger         = options[:logger]
-      @touch_first    = options[:touch_first]
+      @touch_first    = options.fetch(:touch_first, false)
       filters << Filters::FileLock.new(:duration => options[:lock_duration], :reserved_path => reserved_path)
       filters << Filters::Delay.new(:duration => options[:delay]) if options[:delay]
     end
