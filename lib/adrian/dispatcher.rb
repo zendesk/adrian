@@ -13,11 +13,11 @@ module Adrian
     end
 
     def on_failure(*exceptions)
-      @failure_handler.add_rule(*exceptions, &Proc.new)
+      @failure_handler.add_rule(*exceptions, &block)
     end
 
     def on_done
-      @failure_handler.add_rule(nil, &Proc.new)
+      @failure_handler.add_rule(nil, &block)
     end
 
     def start(queue, worker_class)
