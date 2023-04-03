@@ -1,0 +1,45 @@
+PATH
+  remote: .
+  specs:
+    adrian (2.0.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    connection_pool (1.2.0)
+    debug (1.7.2)
+      irb (>= 1.5.0)
+      reline (>= 0.3.1)
+    girl_friday (0.11.2)
+      connection_pool (~> 1.0)
+      rubinius-actor
+    io-console (0.6.0)
+    irb (1.6.3)
+      reline (>= 0.3.0)
+    minitest (5.18.0)
+    rake (13.0.6)
+    reline (0.3.3)
+      io-console (~> 0.5)
+    rubinius-actor (0.0.2)
+      rubinius-core-api
+    rubinius-core-api (0.0.1)
+    timecop (0.9.6)
+
+PLATFORMS
+  arm64-darwin-21
+  arm64-darwin-22
+  arm64-linux
+  ruby
+  x86_64-darwin-21
+  x86_64-linux
+
+DEPENDENCIES
+  adrian!
+  debug (>= 1.0.0)
+  girl_friday (~> 0.11.0)
+  minitest (~> 5)
+  rake (~> 13)
+  timecop (~> 0.9)
+
+BUNDLED WITH
+   2.4.10
