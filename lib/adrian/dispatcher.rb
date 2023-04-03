@@ -12,12 +12,12 @@ module Adrian
       @options             = options
     end
 
-    def on_failure(*exceptions)
-      @failure_handler.add_rule(*exceptions, &Proc.new)
+    def on_failure(*exceptions, &blk)
+      @failure_handler.add_rule(*exceptions, &blk)
     end
 
-    def on_done
-      @failure_handler.add_rule(nil, &Proc.new)
+    def on_done(&blk)
+      @failure_handler.add_rule(nil, &blk)
     end
 
     def start(queue, worker_class)
