@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    adrian (2.0.1)
+    adrian (2.0.2)
 
 GEM
   remote: https://rubygems.org/
