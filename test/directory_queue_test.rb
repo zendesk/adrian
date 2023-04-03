@@ -24,14 +24,14 @@ describe Adrian::DirectoryQueue do
     @q.push(item2)
     @q.push(item3)
 
-    @q.length.must_equal 3
+    _(@q.length).must_equal 3
 
-    @q.pop.must_equal Adrian::FileItem.new(item1)
-    @q.pop.must_equal Adrian::FileItem.new(item2)
-    @q.pop.must_equal Adrian::FileItem.new(item3)
-    @q.pop.must_be_nil
+    _(@q.pop).must_equal Adrian::FileItem.new(item1)
+    _(@q.pop).must_equal Adrian::FileItem.new(item2)
+    _(@q.pop).must_equal Adrian::FileItem.new(item3)
+    _(@q.pop).must_be_nil
 
-    @q.length.must_equal 0
+    _(@q.length).must_equal 0
   end
 
   describe 'file backend' do
@@ -63,7 +63,7 @@ describe Adrian::DirectoryQueue do
         one_hour = 3_600
 
         Time.stub(:now, reserved_item.updated_at + one_hour - 1) do
-          assert_equal nil, @q.pop
+          assert_nil @q.pop
         end
 
         Time.stub(:now, reserved_item.updated_at + one_hour) do
@@ -85,18 +85,18 @@ describe Adrian::DirectoryQueue do
         def @q.files
           [ 'no/longer/exists' ]
         end
-        assert_equal nil, @q.pop
+        assert_nil @q.pop
       end
 
       it "only provides normal files" do
         not_file = Dir.mktmpdir('directory_queue_x', @q.available_path)
-        assert_equal nil, @q.pop
+        assert_nil @q.pop
       end
 
       it "sets the logger on the item" do
-        @item.logger.must_be_nil
+        _(@item.logger).must_be_nil
         @q.push(@item)
-        @q.pop.logger.must_equal @logger
+        _(@q.pop.logger).must_equal @logger
       end
 
       describe "items list" do
@@ -108,18 +108,18 @@ describe Adrian::DirectoryQueue do
         end
 
         it "populates items list on first pop" do
-          items_count.must_equal 0
+          _(items_count).must_equal 0
           @q.push(@item1)
           @q.push(@item2)
-          items_count.must_equal 0
+          _(items_count).must_equal 0
 
           @q.pop
-          items_count.must_equal 1
+          _(items_count).must_equal 1
         end
 
         it "populates items list when #include? is used" do
           @q.push(@item1)
-          items_count.must_equal 0
+          _(items_count).must_equal 0
           assert @q.include?(@item1)
         end
 
@@ -128,26 +128,26 @@ describe Adrian::DirectoryQueue do
             @q.push(@item1)
             @q.push(@item2)
             @q.pop
-            items_count.must_equal 1
+            _(items_count).must_equal 1
 
             @q.push(@item3)
             @q.push(@item4)
             refute @q.include?(@item4)
-            items_count.must_equal 1
+            _(items_count).must_equal 1
 
             @q.pop
-            items_count.must_equal 0
+            _(items_count).must_equal 0
           end
 
           it "and #pop is called" do
             @q.pop
             assert @q.include?(@item4)
-            items_count.must_equal 1
+            _(items_count).must_equal 1
           end
 
           it "and #include? is called" do
             assert @q.include?(@item3)
-            items_count.must_equal 2
+            _(items_count).must_equal 2
           end
         end
       end
@@ -179,24 +179,24 @@ describe Adrian::DirectoryQueue do
       it 'should add a delay filter if the :delay option is given' do
         q = Adrian::DirectoryQueue.create(:path => Dir.mktmpdir('dir_queue_test'))
         filter = q.filters.find {|filter| filter.is_a?(Adrian::Filters::Delay)}
-        filter.must_equal nil
+        _(filter).must_be_nil
 
         q = Adrian::DirectoryQueue.create(:path => Dir.mktmpdir('dir_queue_test'), :delay => 300)
         filter = q.filters.find {|filter| filter.is_a?(Adrian::Filters::Delay)}
-        filter.wont_equal nil
-        filter.duration.must_equal 300
+        _(filter).wont_equal nil
+        _(filter.duration).must_equal 300
       end
 
       it 'should add a lock filter that can be configured with the :lock_duration option' do
         q = Adrian::DirectoryQueue.create(:path => Dir.mktmpdir('dir_queue_test'))
         filter = q.filters.find {|filter| filter.is_a?(Adrian::Filters::FileLock)}
-        filter.wont_equal nil
-        filter.duration.must_equal 3600 # default value
+        _(filter).wont_equal nil
+        _(filter.duration).must_equal 3600 # default value
 
         q = Adrian::DirectoryQueue.create(:path => Dir.mktmpdir('dir_queue_test'), :lock_duration => 300)
         filter = q.filters.find {|filter| filter.is_a?(Adrian::Filters::FileLock)}
-        filter.wont_equal nil
-        filter.duration.must_equal 300
+        _(filter).wont_equal nil
+        _(filter.duration).must_equal 300
       end
     end
   end

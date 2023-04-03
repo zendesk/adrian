@@ -22,7 +22,7 @@ describe Adrian::GirlFridayDispatcher do
 
       @dispatcher.start(@q, worker)
 
-      $done_items.sort.must_equal([1, 2, 3])
+      _($done_items.sort).must_equal([1, 2, 3])
     end
   end
 end

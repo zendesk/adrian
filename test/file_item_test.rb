@@ -28,13 +28,13 @@ describe Adrian::FileItem do
   describe 'updated_at' do
 
     it 'is the atime of the file' do
-      @item.updated_at.must_equal File.atime(@item.path)
+      _(@item.updated_at).must_equal File.atime(@item.path)
     end
 
     it 'is nil when moved by another process' do
       item = Adrian::FileItem.new('moved/during/initialize')
       assert_equal false, item.exist?
-      assert_equal nil,   item.updated_at
+      assert_nil          item.updated_at
     end
 
     it 'is cached' do
@@ -51,13 +51,13 @@ describe Adrian::FileItem do
   describe 'created_at' do
 
     it 'is the mtime of the file' do
-      @item.created_at.must_equal File.mtime(@item.path)
+      _(@item.created_at).must_equal File.mtime(@item.path)
     end
 
     it 'is nil when moved by another process' do
       item = Adrian::FileItem.new('moved/during/initialize')
       assert_equal false, item.exist?
-      assert_equal nil,   item.created_at
+      assert_nil          item.created_at
     end
 
     it 'is cached' do
@@ -100,13 +100,13 @@ describe Adrian::FileItem do
     it 'does not change the atime' do
       atime = File.atime(@item.path)
       @item.move(@destination)
-      File.atime(@item.path).must_equal atime
+      _(File.atime(@item.path)).must_equal atime
     end
 
     it 'does not change the mtime' do
       mtime = File.mtime(@item.path)
       @item.move(@destination)
-      File.mtime(@item.path).must_equal mtime
+      _(File.mtime(@item.path)).must_equal mtime
     end
 
   end
@@ -126,8 +126,8 @@ describe Adrian::FileItem do
       now = (Time.now - 100)
       Time.stub(:now, now) { @item.touch }
 
-      now.to_i.wont_equal atime
-      File.atime(@item.path).to_i.must_equal now.to_i
+      _(now.to_i).wont_equal atime
+      _(File.atime(@item.path).to_i).must_equal now.to_i
     end
 
     it 'does not change the mtime' do
@@ -136,8 +136,8 @@ describe Adrian::FileItem do
       now = (Time.now - 100)
       Time.stub(:new, now) { @item.touch }
 
-      now.to_i.wont_equal mtime
-      File.mtime(@item.path).to_i.must_equal mtime
+      _(now.to_i).wont_equal mtime
+      _(File.mtime(@item.path).to_i).must_equal mtime
     end
 
   end

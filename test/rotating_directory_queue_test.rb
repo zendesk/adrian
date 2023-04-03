@@ -31,8 +31,8 @@ describe Adrian::RotatingDirectoryQueue do
       @item2.move(tomorrows_directory)
       @item3.move(@root_path)
 
-      @q.pop.must_equal @item1
-      @q.pop.must_be_nil
+      _(@q.pop).must_equal @item1
+      _(@q.pop).must_be_nil
     end
   end
 
@@ -48,7 +48,7 @@ describe Adrian::RotatingDirectoryQueue do
       assert_equal false, File.exist?(original_path)
       assert_equal true,  File.exist?(File.join(@q.available_path, @item.name))
 
-      @item.path.must_equal File.join(@root_path, Time.now.strftime('%Y-%m-%d'), @item.name)
+      _(@item.path).must_equal File.join(@root_path, Time.now.strftime('%Y-%m-%d'), @item.name)
     end
   end
 
