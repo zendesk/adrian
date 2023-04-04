@@ -33,7 +33,7 @@ describe Adrian::Dispatcher do
 
       @dispatcher.start(@q, @worker)
 
-      $done_items.must_equal([1, 2, 3])
+      _($done_items).must_equal([1, 2, 3])
     end
   end
 
@@ -48,7 +48,7 @@ describe Adrian::Dispatcher do
     it 'skips the old items' do
       @dispatcher.start(@q, @worker)
 
-      $done_items.must_equal([1, 3])
+      _($done_items).must_equal([1, 3])
     end
 
     it 'calls the handler for Adrian::Queue::ItemTooOldError' do
@@ -62,9 +62,9 @@ describe Adrian::Dispatcher do
 
       @dispatcher.start(@q, @worker)
 
-      handled_items.must_equal [@old_item]
-      handled_exceptions.size.must_equal 1
-      handled_exceptions.first.must_be_instance_of Adrian::Queue::ItemTooOldError
+      _(handled_items).must_equal [@old_item]
+      _(handled_exceptions.size).must_equal 1
+      _(handled_exceptions.first).must_be_instance_of Adrian::Queue::ItemTooOldError
     end
   end
 
@@ -87,13 +87,13 @@ describe Adrian::Dispatcher do
       end
 
       @dispatcher.work_done(1, nil)
-      @q.pop.must_be_nil
+      _(@q.pop).must_be_nil
 
       @dispatcher.work_done(1, nil, nil)
-      @q.pop.must_be_nil
+      _(@q.pop).must_be_nil
 
       @dispatcher.work_done(1, nil, RuntimeError.new)
-      @q.pop.value.must_equal 1
+      _(@q.pop.value).must_equal 1
     end
   end
 end

@@ -25,11 +25,11 @@ describe "Adrian::Dispatcher lifecycle" do
 
         sleep(0.5)
 
-        @q.pop.must_be_nil
+        _(@q.pop).must_be_nil
 
-        $done_items.must_equal([1,2,3])
+        _($done_items).must_equal([1,2,3])
 
-        @dispatcher.running.must_equal false
+        _(@dispatcher.running).must_equal false
       end
     end
 
@@ -45,11 +45,11 @@ describe "Adrian::Dispatcher lifecycle" do
 
         sleep(0.5)
 
-        @q.pop.must_be_nil
+        _(@q.pop).must_be_nil
 
-        $done_items.must_equal([1,2,3])
+        _($done_items).must_equal([1,2,3])
 
-        @dispatcher.running.must_equal true
+        _(@dispatcher.running).must_equal true
         t.kill
       end
     end
@@ -67,15 +67,15 @@ describe "Adrian::Dispatcher lifecycle" do
 
       sleep(0.5)
 
-      @dispatcher.running.must_equal true
-      t.status.wont_equal false
+      _(@dispatcher.running).must_equal true
+      _(t.status).wont_equal false
 
       @dispatcher.stop
 
       sleep(0.5)
 
-      @dispatcher.running.must_equal false
-      t.status.must_equal false
+      _(@dispatcher.running).must_equal false
+      _(t.status).must_equal false
     end
   end
 

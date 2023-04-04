@@ -8,7 +8,9 @@ Gem::Specification.new 'adrian', Adrian::VERSION do |gem|
   gem.homepage      = 'https://github.com/zendesk/adrian'
   gem.license       = 'Apache License Version 2.0'
   gem.files         = `git ls-files lib`.split("\n")
-  gem.add_development_dependency 'rake'
-  gem.add_development_dependency 'minitest'
-  gem.add_development_dependency 'girl_friday'
+
+  gem.add_development_dependency 'rake', '~> 13'
+  gem.add_development_dependency 'minitest', '~> 5'
+  gem.add_development_dependency 'girl_friday', '~> 0.11.0'
+  gem.add_development_dependency 'timecop', '~> 0.9'
 end

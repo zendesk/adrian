@@ -15,15 +15,15 @@ describe Adrian::FailureHandler do
   it "should match rules in the order they were added" do
     block = @handler.handle(RuntimeError.new)
     assert block
-    block.call.must_equal :runtime
+    _(block.call).must_equal :runtime
 
     block = @handler.handle(StandardError.new)
     assert block
-    block.call.must_equal :standard
+    _(block.call).must_equal :standard
   end
 
   it "should do nothing when no rules match" do
-    @handler.handle(Exception.new).must_be_nil
+    _(@handler.handle(Exception.new)).must_be_nil
   end
 
   describe "the success rule" do
@@ -33,11 +33,11 @@ describe Adrian::FailureHandler do
     end
 
     it "should match when there is no exception" do
-      @handler.handle(RuntimeError.new).must_be_nil
+      _(@handler.handle(RuntimeError.new)).must_be_nil
 
       block = @handler.handle(nil)
       assert block
-      block.call.must_equal :success
+      _(block.call).must_equal :success
     end
   end
 
