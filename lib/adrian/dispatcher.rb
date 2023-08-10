@@ -53,7 +53,6 @@ module Adrian
 
     def trap_stop_signals
       Signal.trap('TERM') { stop }
-      Signal.trap('INT')  { stop }
     end
 
     def delegate_work(item, worker_class)
