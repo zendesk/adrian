@@ -8,6 +8,7 @@ Gem::Specification.new 'adrian', Adrian::VERSION do |gem|
   gem.homepage      = 'https://github.com/zendesk/adrian'
   gem.license       = 'Apache License Version 2.0'
   gem.files         = `git ls-files lib`.split("\n")
+  gem.required_ruby_version = '>= 3.2'
 
   gem.add_development_dependency 'rake', '~> 13'
   gem.add_development_dependency 'minitest', '~> 5'
